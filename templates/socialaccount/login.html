@@ -1,0 +1,32 @@
+{% extends 'Home/nav.html' %}
+{% block title %} ChalkBoard Art | Sign In {% endblock %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+   <link rel="stylesheet" href="{% static 'css/forgot-password-style.css' %}">
+<script src="{% static 'js/validation.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/password-helper.css' %}">
+<section class="signin-page">
+    <div class="sign-content">
+        <header>
+          <span style="color: #4285F4;">G</span>
+          <span style="color: #DB4437;">O</span>
+          <span style="color: #F4B400;">O</span>
+          <span style="color: #4285F4;">G</span>
+          <span style="color: #0F9D58;">L</span>
+          <span style="color: #DB4437;">E</span>
+        </header>
+        <form method="post">
+            {% csrf_token %}
+            {% if process == "connect" %}            
+            <div class="signup" style="margin-bottom: 20px;">{% blocktrans with provider.name as provider %}You are about to connect a new third party account from {{ provider }}.{% endblocktrans %}</div>
+            {% else %}            
+            <div class="signup" style="margin-bottom: 20px;">{% blocktrans with provider.name as provider %}You are about to sign in/sign up using ChalkBoard Art account from {{ provider }}.{% endblocktrans %}</div>
+            {% endif %}
+            <div class="field">
+              <input type="submit" value='{% trans "Continue" %}' style="background: #27ae60; border-color: #27ae60;">
+            </div>
+        </form>
+     </div>
+  </section>
+{% endblock %}    

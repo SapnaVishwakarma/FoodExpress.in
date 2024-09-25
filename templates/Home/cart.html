@@ -1,0 +1,155 @@
+<html lang="en">
+{% load static %}
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+
+<title>ChalkBoard Art | Cart</title>
+</head>
+<body class="bg-light">
+  <header class="nav-header" >
+
+    <a href="{% url 'home' %}" class="logo"><i class="fas fa-utensils"></i>Chalkboard Art</a>
+
+    <nav class="navbar">
+        <a class="nav-anc" href="{% url 'home' %}">home</a>
+        <a class="nav-anc" href="https://chalkboardart.in/#about">about</a>
+        <a class="nav-anc" href="{% url 'menu' %}">menu</a>
+        <a class="nav-anc" href="https://chalkboardart.in/#review">review</a>
+        <a class="nav-anc" href="{% url 'my-order' %}">order</a>
+        {% if user.is_staff %}
+        <a class="nav-anc" href="{% url 'customer-orders' %}">Customer Orders</a>
+        {% endif %}
+    </nav>
+
+    <div class="icons">
+        <i class="fas fa-bars" id="menu-bars" ></i>
+        {% if user.is_authenticated %}
+        {% else %}
+        <a href="{% url 'signup' %}" class="nav-anc" class="fas fa-solid fa-user-plus"></a>
+        {% endif %}
+        <a href="{% url 'cart' %}" class="fa nav-anc" style="font-size:18px">&#xf07a;</a>
+<span class='badge badge-warning' id='lblCartCount'> {{cart_size}} </span>
+        <a href="https://wa.me/+919001302924"  target="_blank" class="fab fa-brands fa-whatsapp nav-anc" style="font-size: 25px;"></a>
+    </div>
+</header>
+{% for message in messages %}
+
+<div style="display: flex; flex-direction: row;" id="{{message.tags}}" class="message">
+<div style="width: 95%;">{{message}}</div>
+      <div align="right" onclick="remove()" style="cursor: pointer;">X</div>   
+  </div>
+  <script>
+    function remove(){
+      document.getElementsByClassName('message')[0].style.display='none'
+    }
+  </script>
+{% endfor %}
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-10 col-11 mx-auto">
+<div class="row mt-5 gx-3">
+<!-- left side div -->
+<div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow">
+<h2 class="py-4 font-weight-bold" style="font-size: 25px; font-weight: 400;">Cart ({{size}} items)</h2>
+{% for item in cart %}
+<div class="card p-4">
+<div class="row">
+<!-- cart images div -->
+<div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
+<img src="{{item.food.image.url}}" class="img-fluid" alt="cart img">
+</div>
+
+
+
+
+<!-- cart product details -->
+<div class="col-md-7 col-11 mx-auto px-4 mt-2">
+<div class="row">
+<!-- product name  -->
+<div class="col-6 card-title" style="width: 100%;">
+<h1 class="mb-4 product_name" style="font-size: 25px; font-weight: 300;">{{item.food.name}}</h1>
+<p class="mb-2" style="font-size: 15px; font-weight: 300;">QUANTITY: {{item.qty}}</p>
+<p class="mb-2" style="font-size: 15px; font-weight: 300;">CATEGORY: {{item.food.category.name}}</p>
+<p class="mb-2" style="font-size: 15px; font-weight: 300;">{{item.food.description}}</p>
+</div>
+<!-- quantity inc dec -->
+
+</div>
+<div style="margin: 10px;">
+  <li type="none" style="font-size: 15px;"><div class="input-group" style="display: inline;">
+    <a href="https://chalkboardart.in/minus?id={{item.id}}"><input type="button" value="-" class="button-minus" data-field="quantity"></a>
+    <input type="number" step="1" max="" value="{{item.qty}}" class="quantity-field" name="quantity" id="qty">
+    <a href="https://chalkboardart.in/plus?id={{item.id}}"><input type="button" value="+" class="button-plus" data-field="quantity"></a>
+  </div>
+  </li>
+</div>
+<!-- //remover move and price -->
+<div class="row">
+<div class="col-8 d-flex justify-content-between remove_wish">
+<p><i class="fas fa-trash-alt" style="font-size: 15px;"></i><a href="https://chalkboardart.in/remove-item?id={{item.id}}" style="font-size: 15px;"> REMOVE ITEM</a></p>
+</div>
+<div class="col-4 d-flex justify-content-end price_money">
+<h3 style="font-size: 25px; font-weight: 300;">₹<span id="itemval">{% widthratio item.qty 1 item.food.price %}</span></h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr/>
+{% endfor %}
+<!-- 2nd cart product -->
+
+</div>
+
+<!-- right side div -->
+<div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5">
+<div class="right_side p-3 shadow bg-white">
+<h2 class="product_name mb-5" style="font-size: 17px;">The Total Amount Of</h2>
+<div class="price_indiv d-flex justify-content-between">
+<p style="font-size: 15px;">Product amount</p>
+<p style="font-size: 15px;">₹<span id="product_total_amt">{{cost}}</span></p>
+</div>
+<div class="price_indiv d-flex justify-content-between">
+<p style="font-size: 15px;">Shipping Charge</p>
+<p style="font-size: 15px;">₹<span id="shipping_charge">0</span></p>
+</div>
+<hr />
+<div class="total-amt d-flex justify-content-between font-weight-bold">
+<p style="font-size: 15px; font-weight: 300;">The total amount of (including VAT)</p>
+<p  style="font-size: 15px;">₹<span id="total_cart_amt">{{cost}}</span></p>
+</div>
+{% if size %}
+<a class="btn btn-primary text-uppercase" href="https://chalkboardart.in/summary?price={{cost}}&iscart={{iscart}}" style="background-color: #27ae60; border-color: #27ae60;">Checkout</a>
+{% else %}
+<a class="btn btn-primary text-uppercase" href="https://chalkboardart.in/summary?price={{cost}}&iscart={{iscart}}" style="background-color: #27ae60; border-color: #27ae60; pointer-events: none;" >Checkout</a>
+{% endif %}
+</div>
+
+<div class="mt-3 shadow p-3 bg-white">
+<div class="pt-4">
+    
+<h5 class="mb-4" style="font-size: 15px;">Expected delivery date</h5>
+<p  style="font-size: 15px;">Today</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Optional JavaScript -->
+<!-- Popper.js first, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
