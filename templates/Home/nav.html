@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/flickity@2/dist/flickity.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}" />
     <title>{% block title %} {% endblock %}</title>
-</head> 
-<body>
+  </head>
+  <body>
     <header class="nav-header">
+      <a href="{% url 'home' %}" class="logo"
+        ><i class="fas fa-utensils"></i
+        ><b style="margin-left: 1px">Food Express</b></a
+      >
 
-        <a href="{% url 'home' %}" class="logo"><i class="fas fa-utensils"></i>Chalkboard Art</a>
-    
-        <nav class="navbar">
-            <a class="active" href="{% url 'home' %}">home</a>
-            <a href="https://chalkboardart.in/#about">about</a>
-            <a href="{% url 'menu' %}">menu</a>
-            <a href="https://chalkboardart.in/#review">review</a>
-            <a href="{% url 'my-order' %}">order</a>
-            {% if user.is_staff %}
-            <a href="{% url 'customer-orders' %}">Customer Orders</a>
-            {% endif %}
-        </nav>
-    
-        <div class="icons">
-            <i class="fas fa-bars" id="menu-bars" ></i>
-            {% if user.is_authenticated %}
-            {% else %}
-            <a href="{% url 'signup' %}" class="fas fa-solid fa-user-plus"></a>
-            {% endif %}
-            <a href="{% url 'cart' %}" class="fa" style="font-size:18px">&#xf07a;</a>
-<span class='badge badge-warning' id='lblCartCount'> {{cart_size}} </span>
-            <a href="https://wa.me/+919001302924"  target="_blank" class="fab fa-brands fa-whatsapp" style="font-size: 25px;"></a>
-        </div>
+      <nav class="navbar">
+        <a class="active" href="{% url 'home' %}">home</a>
+        <a href="#about">about</a>
+        <a href="{% url 'menu' %}">menu</a>
+        <a href="#review">review</a>
+        <a href="{% url 'my-order' %}">order</a>
+        {% if user.is_staff %}
+        <a href="{% url 'customer-orders' %}">Customer Orders</a>
+        {% endif %}
+      </nav>
+
+      <div class="icons">
+        <i class="fas fa-bars" id="menu-bars"></i>
+        {% if user.is_authenticated %} {% else %}
+        <a href="{% url 'signup' %}" class="fas fa-solid fa-user-plus"></a>
+        {% endif %}
+        <a href="{% url 'cart' %}" class="fa" style="font-size: 18px"
+          >&#xf07a;</a
+        >
+        <span class="badge badge-warning" id="lblCartCount">
+          {{cart_size}}
+        </span>
+        <a
+          href="#"
+          class="fab fa-brands fa-whatsapp"
+          style="font-size: 25px"
+        ></a>
+      </div>
     </header>
-    
-    <!-- header section ends-->
-    
-    <!-- search form  -->
-    {% include 'Home/message.html' %}
-    {% block content %}
-    {% endblock %}
-    <script src="{% static 'js/script.js' %}"></script>
 
-</body>
+    <!-- header section ends-->
+
+    <!-- search form  -->
+    {% include 'Home/message.html' %} {% block content %} {% endblock %}
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
 </html>

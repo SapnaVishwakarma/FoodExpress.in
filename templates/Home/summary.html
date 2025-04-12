@@ -44,32 +44,41 @@ input.razorpay-payment-button{
     }
   </script>
 {% endfor %}
-<header class="nav-header" style="margin-bottom: 10px;">
-
-    <a href="{% url 'home' %}" class="logo"><i class="fas fa-utensils"></i>Chalkboard Art</a>
+<header class="nav-header">
+    <a href="{% url 'home' %}" class="logo"
+      ><i class="fas fa-utensils"></i
+      ><b style="margin-left: 1px">Food Express</b></a
+    >
 
     <nav class="navbar">
-        <a href="{% url 'home' %}">home</a>
-        <a href="https://chalkboardart.in/#about">about</a>
-        <a href="{% url 'menu' %}">menu</a>
-        <a href="https://chalkboardart.in/#review">review</a>
-        <a href="{% url 'my-order' %}">order</a>
-        {% if user.is_staff %}
-        <a href="{% url 'customer-orders' %}">Customer Orders</a>
-        {% endif %}
+      <a class="active" href="{% url 'home' %}">home</a>
+      <a href="#about">about</a>
+      <a href="{% url 'menu' %}">menu</a>
+      <a href="#review">review</a>
+      <a href="{% url 'my-order' %}">order</a>
+      {% if user.is_staff %}
+      <a href="{% url 'customer-orders' %}">Customer Orders</a>
+      {% endif %}
     </nav>
 
     <div class="icons">
-        <i class="fas fa-bars" id="menu-bars" ></i>
-        {% if user.is_authenticated %}
-        {% else %}
-        <a href="{% url 'signup' %}" class="fas fa-solid fa-user-plus"></a>
-        {% endif %}
-        <a href="{% url 'cart' %}" class="fa" style="font-size:18px">&#xf07a;</a>
-<span class='badge badge-warning' id='lblCartCount'> {{cart_size}} </span>
-        <a href="https://wa.me/+919001302924"  target="_blank" class="fab fa-brands fa-whatsapp" style="font-size: 25px;"></a>
+      <i class="fas fa-bars" id="menu-bars"></i>
+      {% if user.is_authenticated %} {% else %}
+      <a href="{% url 'signup' %}" class="fas fa-solid fa-user-plus"></a>
+      {% endif %}
+      <a href="{% url 'cart' %}" class="fa" style="font-size: 18px"
+        >&#xf07a;</a
+      >
+      <span class="badge badge-warning" id="lblCartCount">
+        {{cart_size}}
+      </span>
+      <a
+        href="#"
+        class="fab fa-brands fa-whatsapp"
+        style="font-size: 25px"
+      ></a>
     </div>
-</header>
+  </header>
 
     {% if payment %}
     <section class="signin-page" style="background-color: white;">
@@ -108,7 +117,7 @@ input.razorpay-payment-button{
                 {% csrf_token %}
                 <script
                     src="https://checkout.razorpay.com/v1/checkout.js"
-                    data-key="rzp_live_eIfhzql8SVrMhC"
+                    data-key="rzp_live_lH3U20Pgmcu4wU"
                     data-amount="{{payment.amount}}"
                     data-currency="INR"
                     data-order_id="{{ payment.id }}"
@@ -139,9 +148,9 @@ input.razorpay-payment-button{
         <h3 class="py-4" style="font-size: 20px;">Customer Details</h3>
 
         <div class="pt-4" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
-            <div style="font-size: 18px; font-weight: 300;">Name&nbsp;&nbsp; <input class="mb-4" type="text" placeholder="Rahul" name="name" style="text-align: center;" required></div>
-           <div  style="font-size: 18px; font-weight: 300;">Phone &nbsp;&nbsp;<input class="mb-4" type="tel" placeholder="95xx54xx12" name="phone" style="text-align: center;" required></div>
-            <div style="font-size: 18px; font-weight: 300;">Address <input class="mb-4" type="text" placeholder="Ajmer Highway, Jaipur" name="address" style="text-align: center;" required></div>
+            <div style="font-size: 18px; font-weight: 300;">Name&nbsp;&nbsp; <input class="mb-4" type="text" placeholder="Enter Your name" name="name" style="text-align: center;" required></div>
+           <div  style="font-size: 18px; font-weight: 300;">Phone &nbsp;&nbsp;<input class="mb-4" type="tel" placeholder="Mobile No" name="phone" style="text-align: center;" required></div>
+            <div style="font-size: 18px; font-weight: 300;">Address <input class="mb-4" type="text" placeholder="Your Address" name="address" style="text-align: center;" required></div>
         </div>
         </div>
 
@@ -161,7 +170,7 @@ input.razorpay-payment-button{
 </div>
 <hr />
 <div class="total-amt d-flex justify-content-between font-weight-bold">
-<p style="font-size: 18px;">The total amount of (including VAT)</p>
+<p style="font-size: 18px;">The total amount of (including GST)</p>
 <p style="font-size: 18px;">₹<span id="total_cart_amt">{{price}}</span></p>
 </div>
 <div>

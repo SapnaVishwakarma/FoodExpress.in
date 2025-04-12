@@ -22,13 +22,10 @@ STATIC_DIR = os.path.join(BASE_DIR,"static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ctsh1_p&xt^1dgp*ker3$p6snbzv658-67j(dlot(bw=qxa)9g'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -63,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+
 ]
 
 ROOT_URLCONF = 'ChalkBoard_Art.urls'
@@ -91,8 +90,6 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'ChalkBoard_Art.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -101,9 +98,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -121,8 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -153,8 +145,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ujjwalcomputerpro1@gmail.com'
-EMAIL_HOST_PASSWORD = 'bdcizsicspdewrfr'
+EMAIL_HOST_USER = 'shivsagardahayat99@gmail.com'
+EMAIL_HOST_PASSWORD = 'knruxbibcdpvdeux'
 
 SITE_ID = 1
 

@@ -1,134 +1,188 @@
 <html lang="en">
-{% load static %}
-<head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/my_orders.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
+  {% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/my_orders.css' %}"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}" />
 
-<title>ChalkBoard Art | My Orders</title>
-<style>
-    .mt-5{
-        margin-top: 0rem!important;
-    }
-    .justify-content-end {
-     justify-content: flex-start!important; 
-}
-</style>
-</head>
-<header class="nav-header" style="position: static; margin-bottom: 20px;">
+    <title>ChalkBoard Art | My Orders</title>
+    <style>
+      .mt-5 {
+        margin-top: 0rem !important;
+      }
+      .justify-content-end {
+        justify-content: flex-start !important;
+      }
+    </style>
+  </head>
+  <header class="nav-header">
+    <a href="{% url 'home' %}" class="logo"
+      ><i class="fas fa-utensils"></i
+      ><b style="margin-left: 1px">Food Express</b></a
+    >
 
-  <a href="{% url 'home' %}" class="logo"><i class="fas fa-utensils"></i>Chalkboard Art</a>
-
-  <nav class="navbar">
-      <a href="{% url 'home' %}">home</a>
-      <a href="https://chalkboardart.in/#about">about</a>
+    <nav class="navbar">
+      <a class="active" href="{% url 'home' %}">home</a>
+      <a href="#about">about</a>
       <a href="{% url 'menu' %}">menu</a>
-      <a href="https://chalkboardart.in/#review">review</a>
+      <a href="#review">review</a>
       <a href="{% url 'my-order' %}">order</a>
       {% if user.is_staff %}
       <a href="{% url 'customer-orders' %}">Customer Orders</a>
       {% endif %}
-  </nav>
+    </nav>
 
-  <div class="icons">
-      <i class="fas fa-bars" id="menu-bars" ></i>
-      {% if user.is_authenticated %}
-      {% else %}
+    <div class="icons">
+      <i class="fas fa-bars" id="menu-bars"></i>
+      {% if user.is_authenticated %} {% else %}
       <a href="{% url 'signup' %}" class="fas fa-solid fa-user-plus"></a>
       {% endif %}
-      <a href="{% url 'cart' %}" class="fa" style="font-size:18px">&#xf07a;</a>
-<span class='badge badge-warning' id='lblCartCount'> {{cart_size}} </span>
-      <a href="https://wa.me/+919001302924"  target="_blank" class="fab fa-brands fa-whatsapp" style="font-size: 25px;"></a>
-  </div>
-</header>
+      <a href="{% url 'cart' %}" class="fa" style="font-size: 18px">&#xf07a;</a>
+      <span class="badge badge-warning" id="lblCartCount"> {{cart_size}} </span>
+      <a href="#" class="fab fa-brands fa-whatsapp" style="font-size: 25px"></a>
+    </div>
+  </header>
 
-{% for message in messages %}
+  {% for message in messages %}
 
-<div style="display: flex; flex-direction: row;" id="{{message.tags}}" class="message">
-<div style="width: 95%;">{{message}}</div>
-      <div align="right" onclick="remove()" style="cursor: pointer;">X</div>   
+  <div
+    style="display: flex; flex-direction: row"
+    id="{{message.tags}}"
+    class="message"
+  >
+    <div style="width: 95%">{{message}}</div>
+    <div align="right" onclick="remove()" style="cursor: pointer">X</div>
   </div>
   <script>
-    function remove(){
-      document.getElementsByClassName('message')[0].style.display='none'
+    function remove() {
+      document.getElementsByClassName("message")[0].style.display = "none";
     }
   </script>
-{% endfor %}
-<body class="bg-light">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-10 col-11 mx-auto">
-<div class="row mt-5 gx-3">
-<!-- left side div -->
-<div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow">
-<h2 class="py-4 font-weight-bold" style="margin-left: 20px; font-size: 25px;">My orders</h2>
-{% for item in cart %}
-{% for d in item.dish.all %}
-<div class="card p-4">
-<div class="row">
-<!-- cart images div -->
-<div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
-<img src="{{d.food.image.url}}" class="img-fluid" alt="cart img">
-</div>
+  {% endfor %}
+  <body class="bg-light">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-10 col-11 mx-auto">
+          <div class="row mt-5 gx-3">
+            <!-- left side div -->
+            <div
+              class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow"
+            >
+              <h2
+                class="py-4 font-weight-bold"
+                style="margin-left: 20px; font-size: 25px"
+              >
+                My orders
+              </h2>
+              {% for item in cart %} {% for d in item.dish.all %}
+              <div class="card p-4">
+                <div class="row">
+                  <!-- cart images div -->
+                  <div
+                    class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img"
+                  >
+                    <img
+                      src="{{d.food.image.url}}"
+                      class="img-fluid"
+                      alt="cart img"
+                    />
+                  </div>
 
+                  <!-- cart product details -->
+                  <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                    <div class="row">
+                      <!-- product name  -->
+                      <div class="col-6 card-title" style="width: 100%">
+                        <h1 class="mb-4 product_name" style="font-size: 25px">
+                          {{d.name}}
+                        </h1>
+                        <p class="mb-2" style="font-size: 15px">
+                          CATEGORY: {{d.food.category.name}}
+                        </p>
+                        <p class="mb-2" style="font-size: 15px">
+                          QUANTITY: {{d.qty}}
+                        </p>
+                        {% if item.order_received %}
+                        <p class="mb-2" style="font-size: 15px">
+                          STATUS:
+                          <span style="color: #15b92b">Order Received</span>
+                        </p>
+                        {% elif item.shipped %}
+                        <p class="mb-2" style="font-size: 15px">
+                          STATUS:
+                          <span style="color: rgba(196, 196, 17, 0.952)"
+                            >Shipped</span
+                          >
+                        </p>
 
+                        {% else %}
+                        <p class="mb-2" style="font-size: 15px">
+                          STATUS: <span style="color: red">Pending</span>
+                        </p>
+                        {% endif %} {% if item.pay_on_delivery %}
+                        <p class="mb-2" style="font-size: 15px">
+                          PAYMENT TYPE: Offline
+                        </p>
+                        {% else %}
+                        <p class="mb-2" style="font-size: 15px">
+                          PAYMENT TYPE: Online
+                        </p>
+                        {% endif %}
+                        <p class="mb-2" style="font-size: 15px">
+                          Date and Time {{item.date_time}}
+                        </p>
+                      </div>
+                      <!-- quantity inc dec -->
 
-
-<!-- cart product details -->
-<div class="col-md-7 col-11 mx-auto px-4 mt-2">
-<div class="row">
-<!-- product name  -->
-<div class="col-6 card-title" style="width: 100%;">
-<h1 class="mb-4 product_name" style="font-size: 25px;">{{d.name}}</h1>
-<p class="mb-2" style="font-size: 15px;">CATEGORY: {{d.food.category.name}}</p>
-<p class="mb-2" style="font-size: 15px;">QUANTITY: {{d.qty}}</p>
-{% if item.order_received %}
-<p class="mb-2" style="font-size: 15px;">STATUS: <span style="color: #15b92b">Order Received</span></p>
-{% elif item.shipped %}
-<p class="mb-2" style="font-size: 15px;">STATUS: <span style="color: rgba(196, 196, 17, 0.952);">Shipped</span></p>
-
-{% else %}
-<p class="mb-2" style="font-size: 15px;">STATUS: <span style="color: red;">Pending</span></p>
-{% endif %}
-{% if item.pay_on_delivery %}
-<p class="mb-2" style="font-size: 15px;">PAYMENT TYPE: Offline</p>
-{% else %}
-<p class="mb-2" style="font-size: 15px;">PAYMENT TYPE: Online </p>
-{% endif %}
-<p class="mb-2" style="font-size: 15px;">Date and Time {{item.date_time}}</p>
-
-</div>
-<!-- quantity inc dec -->
-
-<!-- //remover move and price -->
-<div class="col-4 d-flex justify-content-end price_money">
-<h3 style="font-size: 25px;">₹<span id="itemval">{{d.food.price}}</span></h3>
-</div>
-</div>
-</div>
-</div>
-</div>
-<hr/>
-{% endfor %}
-{% endfor %}
-<!-- 2nd cart product -->
-
-</div>
-
-</div>
-</div>
-</div>
-</div>
-<!-- Optional JavaScript -->
-<!-- Popper.js first, then Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-<script src="{% static 'js/script.js' %}"></script>
-
-</body>
+                      <!-- //remover move and price -->
+                      <div class="col-4 d-flex justify-content-end price_money">
+                        <h3 style="font-size: 25px">
+                          ₹<span id="itemval">{{d.food.price}}</span>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              {% endfor %} {% endfor %}
+              <!-- 2nd cart product -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- Popper.js first, then Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
 </html>
