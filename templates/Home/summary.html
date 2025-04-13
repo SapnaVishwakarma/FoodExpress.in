@@ -117,7 +117,7 @@ input.razorpay-payment-button{
                 {% csrf_token %}
                 <script
                     src="https://checkout.razorpay.com/v1/checkout.js"
-                    data-key="rzp_live_lH3U20Pgmcu4wU"
+                    data-key="rzp_test_ZqMgsr9KkejvM8"
                     data-amount="{{payment.amount}}"
                     data-currency="INR"
                     data-order_id="{{ payment.id }}"
